@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
+import { Button, Text, Input } from '@lunchtime-larry/ui';
+import { useAuth } from '@lunchtime-larry/core/hooks';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ export default function SignUp() {
       }
       router.push('/profile/setup');
     } catch (err) {
-      setError('Failed to create account');
+      setError('Failed to create account. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -49,15 +50,16 @@ export default function SignUp() {
       }
       router.push('/profile/setup');
     } catch (err) {
-      setError('Failed to sign up with Google');
+      setError('Failed to sign up with Google. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen">
-      <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div className="min-h-screen flex">
+      {/* Left side - Form */}
+      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
             <img
@@ -81,30 +83,28 @@ export default function SignUp() {
 
           <div className="mt-8">
             <div>
-              <div>
-                <button
-                  onClick={handleGoogleSignUp}
-                  disabled={loading}
-                  className="flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
-                >
-                  <img
-                    className="mr-2 h-5 w-5"
-                    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                    alt="Google"
-                  />
-                  Sign up with Google
-                </button>
-              </div>
+              <button
+                onClick={handleGoogleSignUp}
+                disabled={loading}
+                className="flex w-full justify-center items-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-2 focus-visible:ring-indigo-600"
+              >
+                <img
+                  className="h-5 w-5"
+                  src="/images/google-logo.svg"
+                  alt="Google"
+                />
+                Sign up with Google
+              </button>
+            </div>
 
-              <div className="relative mt-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">
-                    Or continue with
-                  </span>
-                </div>
+            <div className="relative mt-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-2 text-gray-500">
+                  Or continue with email
+                </span>
               </div>
             </div>
 
@@ -119,11 +119,11 @@ export default function SignUp() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Email address
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-2">
                     <input
                       id="email"
                       name="email"
@@ -132,7 +132,7 @@ export default function SignUp() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -140,11 +140,11 @@ export default function SignUp() {
                 <div>
                   <label
                     htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Password
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-2">
                     <input
                       id="password"
                       name="password"
@@ -153,7 +153,7 @@ export default function SignUp() {
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -161,11 +161,11 @@ export default function SignUp() {
                 <div>
                   <label
                     htmlFor="confirm-password"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Confirm Password
                   </label>
-                  <div className="mt-1">
+                  <div className="mt-2">
                     <input
                       id="confirm-password"
                       name="confirm-password"
@@ -174,7 +174,7 @@ export default function SignUp() {
                       required
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -183,7 +183,7 @@ export default function SignUp() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
                     {loading ? 'Creating account...' : 'Create account'}
                   </button>
@@ -193,6 +193,8 @@ export default function SignUp() {
           </div>
         </div>
       </div>
+
+      {/* Right side - Image */}
       <div className="relative hidden w-0 flex-1 lg:block">
         <img
           className="absolute inset-0 h-full w-full object-cover"
